@@ -11,7 +11,7 @@
     key_name: "{{ r_server.key_name }}"
     wait: yes
     nics:
-    - net-name: "int_{{ osp_guid }}"
+    - net-name: int_network
     userdata: |
       #!/bin/bash
       curl -o /tmp/openstack.pub http://www.opentlc.com/download/ansible_bootcamp/openstack_keys/openstack.pub
@@ -30,7 +30,7 @@
     state: present
     reuse: true
     server: "{{ r_server.name }}"
-    network: "ext_{{ osp_guid }}"
+    network: ext_network
     wait: true
     timeout: 180
   loop: osp_servers
@@ -44,7 +44,7 @@
     state: present
     reuse: yes
     server: "{{ r_server.name }}"
-    network: "ext_{{ osp_guid }}"
+    network: ext_network
     wait: true
     timeout: 180
   loop: osp_servers
