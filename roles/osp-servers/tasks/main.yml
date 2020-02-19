@@ -36,7 +36,6 @@
   loop: osp_servers
   loop_control:
     index_var: r_server
-   
 
 - name: Wait for server to be available
   os_floating_ip:
