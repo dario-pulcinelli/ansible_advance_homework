@@ -1,4 +1,6 @@
 - hosts: workstation
   become: yes
-  roles:
-    - osp-servers
+  tasks:
+  - name: Run OSP setup
+    import_role:
+      name: osp-servers
