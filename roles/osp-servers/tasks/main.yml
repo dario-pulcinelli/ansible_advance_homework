@@ -1,6 +1,5 @@
 ---
-- name: test
-  debug:
+- debug:
     msg: "{{ id.name }}"
   loop: "{{ osp_servers }}"
   loop_control:
