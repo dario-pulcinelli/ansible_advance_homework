@@ -11,12 +11,12 @@
 - name: Create new server instances and attaches them a network and passes metadata to the instance
   os_server:
     cloud: ospcloud
-    name: "{{ r_server.name }}"
-    image: "{{ r_server.image }}"
-    meta: "{{ r_server.meta|join(', ') }}"
-    flavor: "{{ r_server.flavor }}"
-    security_groups: "{{ r_server.security_group }}"
-    key_name: "{{ r_server.key_name }}"
+    name: "{{ r_server.key }}"
+    image: "{{ r_server.value.image }}"
+    meta: "{{ r_server.value.meta|join(', ') }}"
+    flavor: "{{ r_server.value.flavor }}"
+    security_groups: "{{ r_server.value.security_group }}"
+    key_name: "{{ r_server.value.key_name }}"
     wait: yes
     nics:
       - net-name: int_network
@@ -31,16 +31,16 @@
     loop_var: r_server
   register: instanceip
 
-- name: Add floating IP to "{{ r_server.name }}"
+- name: Add floating IP to "{{ r_server.key }}"
   os_floating_ip:
     cloud: ospcloud
     state: present
     reuse: yes
-    server: "{{ r_server.name }}"
+    server: "{{ r_server.key }}"
     network: ext_network
     wait: true
     timeout: 180
-  loop: osp_servers
+  loop: "{{ osp_servers | dict2items }}"
   loop_control:
     loop_var: r_server
   register: instancefloatingip
@@ -48,13 +48,13 @@
 - name: Show "{{ instanceip }}" public IP
   debug: var=instancefloatingip.floating_ip.floating_ip_address
 
-- name: Wait for "{{ r_name.name }}" to be available
+- name: Wait for "{{ r_name.key }}" to be available
   wait_for:
     host: "{{ instancefloatingip.floating_ip.floating_ip_address }}"
     port: 22
     search_regex: OpenSSH
     timeout: 600
   delegate_to: "{{ inventory_hostname }}"
-  loop: osp_servers
+  loop: "{{ osp_servers | dict2items }}"
   loop_control:
     loop_var: r_server
