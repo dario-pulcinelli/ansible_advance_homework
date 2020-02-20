@@ -5,7 +5,7 @@
     cloud: ospcloud
     name: "{{ r_server.name }}"
     image: "{{ r_server.image }}"
-    meta: "{{ r_server.meta | to_json }}"
+    meta: "{{ r_server.meta | to_yaml }}"
     flavor: "{{ r_server.flavor }}"
     security_groups: "{{ r_server.security_group }}"
     key_name: "{{ r_server.key_name }}"
