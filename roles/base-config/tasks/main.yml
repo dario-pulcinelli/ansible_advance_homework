@@ -8,7 +8,8 @@
   delegate_to: localhost
 
 - name: Install repository in the machines
-  copy: 'internal.repo'
+  copy: 
+    src: 'internal.repo'
     dest: '/etc/yum.repos.d/internal.repo'
     owner: root
     group: root
