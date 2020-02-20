@@ -5,7 +5,10 @@
     cloud: ospcloud
     name: "{{ r_server.name }}"
     image: "{{ r_server.image }}"
-    meta: "{% for key, value in r_server.meta.items() %}{{key}}={{value}},{{%endfor%}}"
+    meta: <
+      {% for key, value in r_server.meta.items() %}
+        {{key}}={{value}},
+      {{% endfor %}}
     flavor: "{{ r_server.flavor }}"
     security_groups: "{{ r_server.security_group }}"
     key_name: "{{ r_server.key_name }}"
