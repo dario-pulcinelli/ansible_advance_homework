@@ -11,7 +11,7 @@
     key_name: "{{ r_server.key_name }}"
     wait: yes
     nics:
-    - net-name: int_network
+      - net-name: int_network
     userdata: |
       #!/bin/bash
       curl -o /tmp/openstack.pub http://www.opentlc.com/download/ansible_bootcamp/openstack_keys/openstack.pub
@@ -21,22 +21,9 @@
   loop: "{{ osp_servers }}"
   loop_control:
     loop_var: r_server
+  register: instanceip
 
-
-- name: Add floating IP to Servers
-  os_floating_ip:
-    cloud: ospcloud
-    state: present
-    reuse: true
-    server: "{{ r_server.name }}"
-    network: ext_network
-    wait: true
-    timeout: 180
-  loop: osp_servers
-  loop_control:
-    loop_var: r_server
-
-- name: Wait for server to be available
+- name: Add floating IP to "{{ r_server.name }}"
   os_floating_ip:
     cloud: ospcloud
     state: present
@@ -45,6 +32,21 @@
     network: ext_network
     wait: true
     timeout: 180
+  loop: osp_servers
+  loop_control:
+    loop_var: r_server
+  register: instancefloatingip
+
+- name: Show "{{ instanceip }}" public IP
+  debug: var=instancefloatingip.floating_ip.floating_ip_address
+
+- name: Wait for "{{ r_name.name }}" to be available
+  wait_for:
+    host: "{{ instancefloatingip.floating_ip.floating_ip_address }}"
+    port: 22
+    search_regex: OpenSSH
+    timeout: 600
+  delegate_to: "{{ inventory_hostname }}"
   loop: osp_servers
   loop_control:
     loop_var: r_server
