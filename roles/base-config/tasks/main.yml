@@ -5,6 +5,7 @@
   get_url:
     url: 'http://www.opentlc.com/download/ansible_bootcamp/repo/internal.repo'
     dest: 'internal.repo'
+  become: false
   delegate_to: localhost
 
 - name: Install repository in the machines
