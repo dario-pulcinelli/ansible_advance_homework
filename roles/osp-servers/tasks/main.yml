@@ -19,7 +19,7 @@
       curl -o /tmp/internal.repo http://www.opentlc.com/download/ansible_bootcamp/repo/internal.repo
       cp /tmp/internal.repo /etc/yum.repos.d/internal.repo
     register: instanceip
-  loop: osp_servers
+  loop: "{{ osp_servers }}"
   loop_control:
     loop_var: r_server
 
