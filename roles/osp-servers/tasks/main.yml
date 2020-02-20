@@ -1,12 +1,4 @@
 ---
-# Print information
-- name:
-  debug:
-    var: r_osp_server
-  loop: "{{osp_servers|dict2items}}"
-  loop_control:
-    loop_var: r_osp_server
-
 # tasks file for osp.servers
 - name: Create new server instances and attaches them a network and passes metadata to the instance
   os_server:
@@ -48,13 +40,13 @@
 - name: Show "{{ instanceip }}" public IP
   debug: var=instancefloatingip.floating_ip.floating_ip_address
 
-- name: Wait for "{{ r_name.key }}" to be available
-  wait_for:
-    host: "{{ instancefloatingip.floating_ip.floating_ip_address }}"
-    port: 22
-    search_regex: OpenSSH
-    timeout: 600
-  delegate_to: "{{ inventory_hostname }}"
-  loop: "{{ osp_servers | dict2items }}"
-  loop_control:
-    loop_var: r_server
+#- name: Wait for "{{ r_name.key }}" to be available
+#  wait_for:
+#    host: "{{ instancefloatingip.floating_ip.floating_ip_address }}"
+#    port: 22
+#    search_regex: OpenSSH
+#    timeout: 600
+#  delegate_to: "{{ inventory_hostname }}"
+#  loop: "{{ osp_servers | dict2items }}"
+#  loop_control:
+#    loop_var: r_server

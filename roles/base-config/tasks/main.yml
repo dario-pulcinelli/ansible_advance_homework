@@ -1,2 +1,16 @@
 ---
 # tasks file for base-config
+
+- name: Download the repository list
+  get_url:
+    url: 'http://www.opentlc.com/download/ansible_bootcamp/repo/internal.repo'
+    dest: 'internal.repo'
+  delegate_to: localhost
+
+- name: Install repository in the machines
+  copy: 'internal.repo'
+    dest: '/etc/yum.repos.d/internal.repo'
+    owner: root
+    group: root
+    mode: '0644'
+    
