@@ -1,9 +1,8 @@
 ---
-- debug:
-    msg: "{{ id.name }}"
+- name: test
+  debug:
+    msg: "{{ item.name }}"
   loop: "{{ osp_servers }}"
-  loop_control:
-    index_var: id
 
 ## tasks file for osp.servers
 #- name: Create new server instances and attaches them a network and passes metadata to the instance
