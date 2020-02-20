@@ -8,7 +8,7 @@
     meta: <
       {% for key, value in r_server.meta.items() %}
         {{key}}={{value}},
-      {{% endfor %}}
+      {% endfor %}
     flavor: "{{ r_server.flavor }}"
     security_groups: "{{ r_server.security_group }}"
     key_name: "{{ r_server.key_name }}"
