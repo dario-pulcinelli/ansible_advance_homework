@@ -3,7 +3,7 @@
 - name:
   debug:
     vars: r_osp_server
-  loop: "{{osp_servers|dict2item}}"
+  loop: "{{osp_servers|dict2items}}"
   loop_control:
     loop_var: r_osp_server
 
