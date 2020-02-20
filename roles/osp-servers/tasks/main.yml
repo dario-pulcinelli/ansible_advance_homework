@@ -18,7 +18,7 @@
       cat /tmp/openstack.pub >> /home/cloud-user/.ssh/authorized_keys
       curl -o /tmp/internal.repo http://www.opentlc.com/download/ansible_bootcamp/repo/internal.repo
       cp /tmp/internal.repo /etc/yum.repos.d/internal.repo
-  loop: "{{ osp_servers | ditc2items }}"
+  loop: "{{ osp_servers | dict2items }}"
   loop_control:
     loop_var: r_server
   register: instanceip
