@@ -5,7 +5,7 @@
     cloud: ospcloud
     name: "{{ r_server.name }}"
     image: "{{ r_server.image }}"
-    meta: "{{ r_server.meta | to_yaml }}"
+    meta: "{{ r_server.meta|join(', ') }}"
     flavor: "{{ r_server.flavor }}"
     security_groups: "{{ r_server.security_group }}"
     key_name: "{{ r_server.key_name }}"
@@ -18,7 +18,7 @@
       cat /tmp/openstack.pub >> /home/cloud-user/.ssh/authorized_keys
       curl -o /tmp/internal.repo http://www.opentlc.com/download/ansible_bootcamp/repo/internal.repo
       cp /tmp/internal.repo /etc/yum.repos.d/internal.repo
-  loop: "{{ osp_servers }}"
+  loop: "{{ osp_servers | ditc2items }}"
   loop_control:
     loop_var: r_server
   register: instanceip
