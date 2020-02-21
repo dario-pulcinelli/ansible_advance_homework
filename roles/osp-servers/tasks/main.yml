@@ -41,13 +41,13 @@
   debug: var=instancefloatingip
 
 
-#- name: Wait for "{{ r_name.key }}" to be available
-#  wait_for:
-#    host: "{{ rserver.floating_ip.floating_ip_address }}"
-#    port: 22
-#    search_regex: OpenSSH
-#    timeout: 600
-#  delegate_to: "{{ inventory_hostname }}"
-#  loop: "{{ osp_servers | dict2items }}"
-#  loop_control:
-#    loop_var: r_server
+- name: Wait for floating ip to be available
+  wait_for:
+    host: "{{ r_floatingip.floating_ip.floating_ip_address }}"
+    port: 22
+    search_regex: OpenSSH
+    timeout: 600
+  delegate_to: "{{ inventory_hostname }}"
+  loop: "{{ instancefloatingip.results }}"
+  loop_control:
+    loop_var: r_floatingip
