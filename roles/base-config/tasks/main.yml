@@ -1,6 +1,13 @@
 ---
 # tasks file for base-config
 
+- name: enable sudo without tty for some ansible commands
+  replace:
+    path: /etc/sudoers
+    regexp: '^Defaults\s*requiretty'
+    replace: 'Defaults  !requiretty'
+    backup: yes
+
 - name: Install repository in the machines
   copy: 
     src: 'internal.repo'
