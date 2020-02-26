@@ -2,10 +2,7 @@
 - hosts: workstation
   become: true
   gather_facts: false
-  vars:
-    param_repo_base: 'http://www.opentlc.com/download/ansible_bootcamp'
   tasks:
-    - include_vars: opentlccred.yml
     - name: create bin directory
       file:
         path: /root/bin
@@ -26,7 +23,6 @@
         url: "{{ param_repo_base }}/scripts/order_svc.sh"
         dest: /root/order_svc.sh
         mode: 0755
-
     - name: create credentials
       copy:
         content: |
@@ -51,9 +47,4 @@
         chdir: /root
     - name: Wait for mail
       pause:
-        minutes: 1
-
-    - name: Delete credentials from server
-      file:
-        path: /root/credentials.rc
-        state: absent
+        minutes: 10
