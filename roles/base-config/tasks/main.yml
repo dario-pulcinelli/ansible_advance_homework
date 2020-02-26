@@ -7,6 +7,9 @@
     replace: 'Defaults  !requiretty'
     backup: yes
 
+- name: cleanup previous repositories configurations
+  command: "rm -f /etc/yum.repos.d/*"
+
 - name: enable repos
   template:
     src: repos_template.j2
