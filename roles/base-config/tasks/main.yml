@@ -13,13 +13,6 @@
     dest: /etc/yum.repos.d/open_three-tier-app.repo
     mode: 0644
 
-- name: check current repositories in yum.repos.d
-  command: "ls -1 /etc/yum.repos.d/* | while read i ;do echo $i ; cat $i ;done"
-  register: r_repos
-
-- debug:
-    var: r_repos.stdout
-
 - name: Clearing yum cache
   command: yum clean all
 
